@@ -1,13 +1,15 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import './Homepage.css'
+import Slider from '../../components/Slider/Slider';
+import { ThemeContext } from '../../contexts/ThemeContext';
+
 
 function Homepage() {
-  //using api key from .env
-  const apiKey = process.env.REACT_APP_API_KEY;
+  const {darkMode, setDarkMode} = useContext(ThemeContext)
 
   return (
-    <div className="homepage-container">
-        Homepage
+    <div className={darkMode? "homepage-container": "homepage-container homepage-light"}>
+        <Slider/>
     </div>
   )
 }

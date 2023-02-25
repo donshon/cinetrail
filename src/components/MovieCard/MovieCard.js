@@ -1,6 +1,7 @@
 import React from 'react'
 import './MovieCard.css'
 import Rating from './../Rating/Rating';
+import { Link } from 'react-router-dom';
 
 function MovieCard({movie, imgUrl, imgHeight, radius, cardStyle}) {
     const imgBase = process.env.REACT_APP_IMG_BASE;
@@ -17,7 +18,7 @@ function MovieCard({movie, imgUrl, imgHeight, radius, cardStyle}) {
     }
 
   return (
-    <div className={cardStyle}>
+    <Link to={`/moviedetails/${movie?.id}`} className={cardStyle}>
         <div className="" style={imgStyle}>
             <div className="movie-info-top">
                 <p>{movie.vote_average}</p>
@@ -26,14 +27,14 @@ function MovieCard({movie, imgUrl, imgHeight, radius, cardStyle}) {
                 <p>{movie.title}</p>
                 <Rating rate={movie.vote_average/2}/>
             </div>
-            {
-                cardStyle==="top-rated-card"?
-                <p>{movie.title}</p>
-                :
-                null
-            }
         </div>
-    </div>
+        {
+            cardStyle==="top-rated-card"?
+            <p>{movie.title}</p>
+            :
+            null
+        }
+    </Link>
   )
 }
 

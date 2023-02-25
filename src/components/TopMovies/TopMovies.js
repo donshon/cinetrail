@@ -19,9 +19,8 @@ function TopMovies() {
             //get upcoming movie data
             axios.get(`${baseUrl}/movie/top_rated?api_key=${apiKey}`)
             .then( res => {
-                //console.log(res.data.results)
                 //store data in state
-                setTopMovies(res.data.results)
+                setTopMovies(res.data.results.slice(0, 10))
             })
             .catch(err=>console.log(err))
         }, [] 
@@ -32,7 +31,7 @@ function TopMovies() {
         <h3>Top Rated Movies</h3>
         <div className="top-rated-wrapper">
             {
-                topMovies.map(item =><MovieCard 
+                topMovies.map(item => <MovieCard 
                     key={item.id} 
                     movie={item} 
                     imgUrl={item.backdrop_path}

@@ -1,26 +1,24 @@
-
 .popular-card {
     margin: 10px;
 }
 
-.top-rated-card{
+.top-rated-card {
     margin: 10px;
 }
 
-.top-rated-card p{
+.top-rated-card p {
     margin-top: 10px;
 }
 
-.movie-info-top{
+.movie-info-top {
     position: absolute;
     top: 0;
     color: var(--red);
     opacity: 0;
     padding: 10px;
-    
 }
 
-.movie-info-bottom{
+.movie-info-bottom {
     position: absolute;
     bottom: 0;
     color: var(--white);
@@ -30,10 +28,9 @@
     justify-content: center;
     opacity: 0;
     padding: 10px;
-   
 }
 
 .popular-card:hover .movie-info-top, 
-.popular-card:hover .movie-info-bottom{
+.popular-card:hover .movie-info-bottom {
     opacity: 1;
 }

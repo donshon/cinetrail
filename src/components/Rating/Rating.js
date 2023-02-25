@@ -8,7 +8,7 @@ function Rating({rate}) {
   return (
     <div>
         <StarRatings
-          rating={rate}
+          rating={3.5}
           starRatedColor="red"
           numberOfStars={5}
           starDimension="15px"

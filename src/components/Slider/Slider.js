@@ -4,6 +4,7 @@ import axios from 'axios';
 import {MdKeyboardArrowRight,MdKeyboardArrowLeft } from 'react-icons/md'
 import Rating from './../Rating/Rating';
 import { Link } from 'react-router-dom'; //page link 4
+import Genres from '../Genres/Genres';
 
 
 function Slider() {
@@ -18,6 +19,9 @@ function Slider() {
     //create state to move thru movies
     const [index, setIndex] = React.useState(0)
 
+    //create state for rating stars
+    const [currentRating, setCurrentRating] = React.useState(0)
+
     //endpoint example: https://api.themoviedb.org/3/movie/upcoming?api_key=4b5e5dfe2a22d13362c4b73eb09a74c6
 
     React.useEffect(
@@ -28,9 +32,20 @@ function Slider() {
                 //console.log(res.data.results)
                 //store data in state
                 setUpcomingMovies(res.data.results)
+                //set first rating
+                setCurrentRating((res.data.results[0]?.vote_average/2))
             })
             .catch(err=>console.log(err))
         }, [] //if nothing in [], useEffect only runs once on page loading
+    )
+
+    //run whenever index cahnges to update rating
+    React.useEffect(
+        ()=>{
+            if (index > 0) {
+                setCurrentRating((upcomingMovies[index]?.vote_average/2))
+            }
+        }, [index]
     )
 
     const sliderStyle = {
@@ -63,9 +78,9 @@ function Slider() {
         <div className="slider-movie-info">
             <h1>{upcomingMovies[index]?.title}</h1>
             <p>{upcomingMovies[index]?.overview?.slice(0, 120)}</p>
-            <p>Genres: </p>
+            <Genres movieGenres={upcomingMovies[index]?.genre_ids}/> 
             <p>Release Date: {upcomingMovies[index]?.release_date}</p>
-            <Rating rate={upcomingMovies[index]?.vote_average/2}/>
+            <Rating stars={currentRating}/>
             <p>Rating: {upcomingMovies[index]?.vote_average}</p>
             <Link to={`/moviedetails/${upcomingMovies[index]?.id}`} className="movie-link">
                 See Details

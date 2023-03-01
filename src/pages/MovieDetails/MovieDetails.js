@@ -4,6 +4,9 @@ import { useParams } from 'react-router-dom' //Page link 5
 import axios from 'axios'
 import ReactPlayer from 'react-player'//npm install react-player
 import { ThemeContext } from '../../contexts/ThemeContext';
+import Review from '../../components/Review/Review'
+import Rating from './../../components/Rating/Rating';
+
 
 function MovieDetails() {
     const apiKey = process.env.REACT_APP_API_KEY;
@@ -18,6 +21,14 @@ function MovieDetails() {
     const [videoLink, setVideoLink] = useState("")
     //need state for movie info
     const [movie, setMovie] = useState()
+    //state for reviews
+    const [reviews, setReviews] = useState([])
+    //state for number of reviews showing
+    const [reviewNumber, setReviewNumber] = useState(3)
+    const [totalReviews, setTotalReviews] = useState(0)
+    //state for rating
+    const [rating, setRating] = useState(0)
+
 
     //example movie details endpoint: https://api.themoviedb.org/3/movie/{movie_id}?api_key=4b5e5dfe2a22d13362c4b73eb09a74c6
     
@@ -36,10 +47,20 @@ function MovieDetails() {
             //another api call for movie info
             axios.get(`${baseUrl}/movie/${movieid}?api_key=${apiKey}`)
             .then( res => {
-                //
                 setMovie(res.data)
+                setRating(res.data.vote_average/2)
             })
             .catch(err=>console.log(err))
+
+            //api call to get reviews 
+            //${base}/movie/${movieid}/reviews?api_key=4b5e5dfe2a22d13362c4b73eb09a74c6
+            axios.get(`${baseUrl}/movie/${movieid}/reviews?api_key=${apiKey}`)
+            .then( res => {
+                setReviews(res.data.results)
+                setTotalReviews(res.data.total_results)
+            })
+            .catch(err=>console.log(err))
+
         }, []
     )
 
@@ -69,6 +90,7 @@ function MovieDetails() {
         <div className="title-container">
             <h2>{movie?.title}</h2>
         </div>
+        <Rating stars={rating}/>
         <div className="info-container">
             <img className="details-poster" src={`${imgBase}/${movie?.poster_path}`}/>
             <div className="movie-details-info">
@@ -81,8 +103,16 @@ function MovieDetails() {
 
         </div>
         <div className="review-container">
-            review
+            {
+                reviews.slice(0, reviewNumber).map( item => <Review review={item}/> )
+            }
         </div>
+        {
+            reviewNumber <= totalReviews?
+            <p onClick={()=> setReviewNumber(reviewNumber+3)}>Read more reviews</p>
+            :
+            <p onClick={()=> setReviewNumber(3)}>End of reviews</p>
+        }
     </div>
   )
 }

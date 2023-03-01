@@ -21,16 +21,16 @@ function MovieCard({movie, imgUrl, imgHeight, radius, cardStyle}) {
     <Link to={`/moviedetails/${movie?.id}`} className={cardStyle}>
         <div className="" style={imgStyle}>
             <div className="movie-info-top">
-                <p>{movie.vote_average}</p>
+                <p>{movie?.vote_average}</p>
             </div>
             <div className="movie-info-bottom">
-                <p>{movie.title}</p>
-                <Rating rate={movie.vote_average/2}/>
+                <p>{movie?.title}</p>
+                <Rating stars={movie?.vote_average/2}/>
             </div>
         </div>
         {
             cardStyle==="top-rated-card"?
-            <p>{movie.title}</p>
+            <p>{movie?.title}</p>
             :
             null
         }

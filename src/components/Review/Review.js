@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import avatar from '../../assets/no-image.png'
 import './Review.css'
 //import error
 
@@ -15,7 +16,9 @@ function Review({review}) {
         <div className="avatar-container">
             <img className="avatar" 
             onError = {()=>setImgError(true)}
-            src={`${imgBase}${review?.author_details.avatar_path}`}/>
+            src={ imgError? avatar:
+                `${imgBase}${review?.author_details.avatar_path}`} 
+            />
             <p>{review?.author}</p>
         </div>
         <div className="review-text">

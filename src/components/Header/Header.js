@@ -1,17 +1,31 @@
-import React, {useContext} from 'react'
+import React, {useState, useContext} from 'react'
 import './Header.css'
 import { MdOutlineDarkMode, MdOutlineLightMode } from 'react-icons/md';
 import { ThemeContext } from '../../contexts/ThemeContext';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../contexts/UserContext';
 
 function Header() {
+    const navigate = useNavigate();
 
     const {darkMode, setDarkMode} = useContext(ThemeContext)
+    const {user, setUser, token, setToken} = useContext(UserContext)
+    const [profileOptions, setProfileOptions] = useState(false)
 
     const handleTheme = () => {
       //toggle dark mode
       setDarkMode(!darkMode)
       //save value in local storage so theme doesn't change when refreshing
       localStorage.setItem("darkmode", !darkMode)
+    }
+
+    const handleLogout = () => {
+      //clear localStorage
+      localStorage.clear()
+      setUser('')
+      setToken('')
+      //go back to homepage
+      navigate('/')
     }
 
   return (
@@ -33,7 +47,25 @@ function Header() {
                   <MdOutlineDarkMode onClick={handleTheme} className="theme-icon"/>
                 </div>
             }
-            <button className="create-acct-btn">Create an account</button>
+
+            {
+              token?
+              <div className="profile-container">
+                <img src={user.image_url} className="profile-img" onClick={()=>setProfileOptions(!profileOptions)}/>
+                <p>Welcome {user.username}</p>
+                {
+                  profileOptions?
+                  <div className="profile-options">
+                    <p>My Favorites</p>
+                    <p className="logout" onClick={handleLogout}>Logout</p>
+                  </div>
+                  :
+                  null
+                }
+              </div>
+              :
+              <button className="create-acct-btn" onClick={()=>navigate('/signup')}>Create an account</button>
+            }
         </div>
     </div>
   )

@@ -4,6 +4,7 @@ import { MdOutlineDarkMode, MdOutlineLightMode } from 'react-icons/md';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
+import {Link} from 'react-router-dom'
 
 function Header() {
     const navigate = useNavigate();
@@ -56,7 +57,7 @@ function Header() {
                 {
                   profileOptions?
                   <div className="profile-options">
-                    <p>My Favorites</p>
+                    <Link to='/myfavorites'>My Favorites</Link>
                     <p className="logout" onClick={handleLogout}>Logout</p>
                   </div>
                   :

@@ -6,13 +6,17 @@ import ReactPlayer from 'react-player'//npm install react-player
 import { ThemeContext } from '../../contexts/ThemeContext';
 import Review from '../../components/Review/Review'
 import Rating from './../../components/Rating/Rating';
+import { UserContext } from '../../contexts/UserContext';
 
 
 function MovieDetails() {
     const apiKey = process.env.REACT_APP_API_KEY;
     const baseUrl = process.env.REACT_APP_BASE_URL;
     const imgBase = process.env.REACT_APP_IMG_BASE;
+    const serverUrl = process.env.REACT_APP_SERVER_URL;
+
     const {darkMode, setDarkMode} = useContext(ThemeContext)
+    const {user, setUser, token, setToken} = useContext(UserContext)
 
     //Need to show movie details. From? movie id found in url as a parameter from App.js
     const {movieid} = useParams();
@@ -28,6 +32,8 @@ function MovieDetails() {
     const [totalReviews, setTotalReviews] = useState(0)
     //state for rating
     const [rating, setRating] = useState(0)
+    //state for fav
+    const [added, setAdded] = useState(false)
 
 
     //example movie details endpoint: https://api.themoviedb.org/3/movie/{movie_id}?api_key=4b5e5dfe2a22d13362c4b73eb09a74c6
@@ -64,6 +70,47 @@ function MovieDetails() {
         }, []
     )
 
+    //decide what add/remove fav button to show on load
+    useEffect( 
+        () => {
+            //check if this movie is on the list
+            axios.post(`${serverUrl}/favoriteMovies/search`, {
+                user_id: user?._id,
+                tmdb_id: movieid 
+            })
+            .then ( res => {
+                if(res.data) {
+                    setAdded(true)
+                }
+            })
+            .catch(err => console.log(err))
+        }, [user]
+    )
+
+    const addToFavs = () => {
+        //need user id & movie id
+        //make api call to save fav
+        axios.post(`${serverUrl}/favoriteMovies`, {
+            movie_id: movieid,
+            user_id: user?._id
+        })
+        .then ( res => {
+            console.log(res)
+        })
+        .catch(err => console.log(err))
+
+        setAdded(true)
+    }
+
+    const removeFromFavs = () => {
+        //make delete request
+        axios.delete(`${serverUrl}/favoriteMovies/${user?._id}/${movieid}`)
+        .then(res => {
+            setAdded(false)
+        })
+        .catch(err => console.log(err))
+    }
+
   return (
     <div className={darkMode? "details-container": "details-container details-light"}>
         {
@@ -89,6 +136,19 @@ function MovieDetails() {
         }
         <div className="title-container">
             <h2>{movie?.title}</h2>
+            {
+                token?
+                <div>
+                {
+                    added?
+                    <button onClick={removeFromFavs} className="btn-remove">Remove from favorites</button>
+                    :
+                    <button onClick={addToFavs} className="btn-add">Add to favorites</button>
+                }
+                </div>
+                :
+                null
+            }
         </div>
         <Rating stars={rating}/>
         <div className="info-container">
@@ -104,7 +164,7 @@ function MovieDetails() {
         </div>
         <div className="review-container">
             {
-                reviews.slice(0, reviewNumber).map( item => <Review review={item}/> )
+                reviews.slice(0, reviewNumber).map( item => <Review key={item.id} review={item}/> )
             }
         </div>
         {

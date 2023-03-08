@@ -81,8 +81,6 @@
     cursor: pointer;
 }
 
-
-
 .profile-options{
     position: absolute;
     top:var(--header-height);
@@ -93,6 +91,7 @@
     flex-direction: column;
     align-items: center;
     padding:5px 0;
+    z-index: 0;
 }
 .profile-options a{
     color:var(--white);

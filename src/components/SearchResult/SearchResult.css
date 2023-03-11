@@ -1,0 +1,9 @@
+.search-link {
+    color: black;
+    display: flex;
+    justify-content: space-between;
+}
+
+.search-link img {
+    height: 50px;
+}

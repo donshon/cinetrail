@@ -3,7 +3,7 @@ import Homepage from './pages/Homepage/Homepage';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import ThemeContextProvider from './contexts/ThemeContext';
-import {BrowserRouter, Routes, Route, HashRouter} from 'react-router-dom'
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import MovieDetails from './pages/MovieDetails/MovieDetails';
 import Signup from './pages/Users/Signup';
 import Signin from './pages/Users/Signin';

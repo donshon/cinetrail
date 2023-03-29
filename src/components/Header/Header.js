@@ -1,9 +1,9 @@
 import React, {useState, useContext} from 'react'
 import './Header.css'
-import { MdOutlineDarkMode, MdOutlineLightMode } from 'react-icons/md';
-import { ThemeContext } from '../../contexts/ThemeContext';
-import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../../contexts/UserContext';
+import {MdOutlineDarkMode, MdOutlineLightMode} from 'react-icons/md';
+import {ThemeContext} from '../../contexts/ThemeContext';
+import {useNavigate} from 'react-router-dom';
+import {UserContext} from '../../contexts/UserContext';
 import {Link} from 'react-router-dom'
 import axios from 'axios'
 import SearchResult from './../SearchResult/SearchResult';
@@ -57,7 +57,7 @@ function Header() {
               query?
               <div className="search-results-container">
                 {
-                  queryResults.map(item => <SearchResult key={item.id} movie={item} />)
+                  queryResults.map(item => <SearchResult key={item.id} movie={item} query={setQuery}/>)
                 }
               </div>
               :
@@ -81,7 +81,7 @@ function Header() {
             {
               token?
               <div className="profile-container">
-                <img src={user.image_url} className="profile-img" onClick={()=>setProfileOptions(!profileOptions)}/>
+                <img src={user.image_url} className="profile-img" onClick={()=>setProfileOptions(!profileOptions)} alt="pfp"/>
                 <p>Welcome {user.username}</p>
                 {
                   profileOptions?

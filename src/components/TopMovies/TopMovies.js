@@ -8,7 +8,7 @@ function TopMovies() {
     //using api key from .env
     const apiKey = process.env.REACT_APP_API_KEY;
     const baseUrl = process.env.REACT_APP_BASE_URL;
-    const imgBase = process.env.REACT_APP_IMG_BASE;
+
 
     //set up state to store movies
     const [topMovies, setTopMovies] = React.useState([])
@@ -23,6 +23,7 @@ function TopMovies() {
                 setTopMovies(res.data.results.slice(0, 10))
             })
             .catch(err=>console.log(err))
+            // eslint-disable-next-line
         }, [] 
     )
 

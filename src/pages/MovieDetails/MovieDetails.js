@@ -66,8 +66,8 @@ function MovieDetails() {
                 setTotalReviews(res.data.total_results)
             })
             .catch(err=>console.log(err))
-
-        }, []
+ 
+        }, [movieid]
     )
 
     //decide what add/remove fav button to show on load
@@ -84,6 +84,7 @@ function MovieDetails() {
                 }
             })
             .catch(err => console.log(err))
+
         }, [user]
     )
 
@@ -152,7 +153,7 @@ function MovieDetails() {
         </div>
         <Rating stars={rating}/>
         <div className="info-container">
-            <img className="details-poster" src={`${imgBase}/${movie?.poster_path}`}/>
+            <img className="details-poster" src={`${imgBase}/${movie?.poster_path}`} alt={`${movie?.title}`}/>
             <div className="movie-details-info">
                 <h2>{movie?.tagline}</h2>
                 <h4>{movie?.overview}</h4>

@@ -18,6 +18,7 @@ function Review({review}) {
             onError = {()=>setImgError(true)}
             src={ imgError? avatar:
                 `${imgBase}${review?.author_details.avatar_path}`} 
+            alt="avatar"
             />
             <p>{review?.author}</p>
         </div>

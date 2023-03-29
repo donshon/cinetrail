@@ -36,6 +36,7 @@ function Slider() {
                 setCurrentRating((res.data.results[0]?.vote_average/2))
             })
             .catch(err=>console.log(err))
+            // eslint-disable-next-line
         }, [] //if nothing in [], useEffect only runs once on page loading
     )
 
@@ -45,6 +46,7 @@ function Slider() {
             if (index > 0) {
                 setCurrentRating((upcomingMovies[index]?.vote_average/2))
             }
+            // eslint-disable-next-line
         }, [index]
     )
 

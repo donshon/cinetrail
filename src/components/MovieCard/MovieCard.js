@@ -1,7 +1,7 @@
 import React from 'react'
 import './MovieCard.css'
 import Rating from './../Rating/Rating';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 function MovieCard({movie, imgUrl, imgHeight, radius, cardStyle}) {
     const imgBase = process.env.REACT_APP_IMG_BASE;
@@ -18,7 +18,7 @@ function MovieCard({movie, imgUrl, imgHeight, radius, cardStyle}) {
     }
 
   return (
-    <Link to={ movie?._id? `/moviedetails/${movie?.tmdb_id}`: `/moviedetails/${movie?.id}`} className={cardStyle}>
+    <Link to={movie?._id? `/moviedetails/${movie?.tmdb_id}`: `/moviedetails/${movie?.id}`} className={cardStyle}>
         <div className="" style={imgStyle}>
             <div className="movie-info-top">
                 <p>{movie?.vote_average}</p>
